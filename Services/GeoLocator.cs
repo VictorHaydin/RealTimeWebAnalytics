@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -77,14 +78,23 @@ namespace RealTimeWebAnalytics.Services
                     found = true;
                     m = h;
                 }
-            }
+#if DEBUG
+                else
+                {
+                    found = true;
+                    m = 70; // ukraine
+                }
+#endif
+        }
 
             if (found)
             {
                 visit.Country = _countryInfos[m].Name;
+                visit.CountryCode = _countryInfos[m].Code;
             }
         }
 
+        [DebuggerDisplay("{Code} - {Name}")]
         private class IpCountryInfo
         {
             public IPAddress StartAddress { get; set; } 

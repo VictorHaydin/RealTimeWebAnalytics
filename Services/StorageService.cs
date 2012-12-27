@@ -11,7 +11,7 @@ namespace RealTimeWebAnalytics.Services
 {
     public class StorageService : IDisposable
     {
-        private EventStoreConnection _connection;
+        private readonly EventStoreConnection _connection;
 
         private StorageService()
         {
