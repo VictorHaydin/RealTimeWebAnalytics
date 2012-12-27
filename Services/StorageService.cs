@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using EventStore.ClientAPI;
+using Newtonsoft.Json;
 using RealTimeWebAnalytics.Models;
 
 namespace RealTimeWebAnalytics.Services
@@ -29,6 +31,12 @@ namespace RealTimeWebAnalytics.Services
         public async Task StoreVisit(Visit visit)
         {
             await _connection.AppendToStreamAsync("Visits", -2, new IEvent[] { visit });
+        }
+
+        public async Task<IEnumerable<Visit>> GetAllVisits()
+        {
+            var slice = _connection.ReadEventStreamForward("Visits", 0, int.MaxValue);
+            return slice.Events.Select(e => JsonConvert.DeserializeObject<Visit>(Encoding.UTF8.GetString(e.Data))).Where(v => v != null).ToArray();
         }
             
         public void Dispose()

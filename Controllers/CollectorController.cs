@@ -15,7 +15,7 @@ namespace RealTimeWebAnalytics.Controllers
     {
         public async Task<ActionResult> Collect()
         {
-            var visit = new Visit {IP = IPAddress.Parse(Request.UserHostAddress).MapToIPv4()};
+            var visit = new Visit {IP = IPAddress.Parse(Request.UserHostAddress).MapToIPv4(), Timestamp = DateTime.UtcNow};
             await GeoLocator.Instance.Locate(visit);
             await StorageService.Instance.StoreVisit(visit);
             return Content("OK");

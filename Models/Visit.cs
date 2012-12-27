@@ -23,6 +23,7 @@ namespace RealTimeWebAnalytics.Models
         public string Country { get; set; }
         public string CountryCode { get; set; }
         public string City { get; set; }
+        public DateTime Timestamp { get; set; }
         
         [JsonIgnore]
         public Guid EventId { get; private set; }
