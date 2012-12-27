@@ -63,8 +63,8 @@ namespace RealTimeWebAnalytics.Services
                     found = true;
                     break;
                 }
-                else if (comparisonRes < 0) l = m;
-                else h = m;
+                else if (comparisonRes < 0) h = m;
+                else l = m;
             }
             if (!found)
             {
