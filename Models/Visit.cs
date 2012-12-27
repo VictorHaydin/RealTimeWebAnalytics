@@ -18,7 +18,7 @@ namespace RealTimeWebAnalytics.Models
 
         [JsonIgnore]
         public IPAddress IP { get; set; }
-        public string IPStr { get { return IP.ToString(); } }
+        public string IPStr { get { return IP.ToString(); } set { IP = IPAddress.Parse(value); } }
         public string Content { get; set; }
         public string Country { get; set; }
         public string CountryCode { get; set; }

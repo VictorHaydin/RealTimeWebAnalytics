@@ -24,7 +24,7 @@
    @foreach (Visit visit in ViewBag.Visits)
    {
        <li>
-           @visit.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"): @visit.Country
+           @visit.Timestamp.ToString("yyyy-MM-dd HH:mm:ss.fff"): @visit.Country - [@visit.IPStr]
        </li>
    }
 </ol>
