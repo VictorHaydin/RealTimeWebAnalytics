@@ -19,7 +19,11 @@
         </div>
     </section>
 }
-<h3>We suggest the following:</h3>
+<h3>World map</h3>
+
+  <div id="world-map" style="width: 960px; height: 640px"></div>
+
+<h3>Visits</h3>
 <ol class="round">
    @foreach (Visit visit in ViewBag.Visits)
    {
@@ -28,3 +32,31 @@
        </li>
    }
 </ol>
+
+
+@section scripts { 
+    <script>
+        var stats =
+        {
+            @foreach (dynamic v in ViewBag.Stats)
+            {
+                @Html.Raw("\"" + v.Code + "\" : " + v.Weight + ",");
+            }
+        };
+        $(function() {
+            $('#world-map').vectorMap({
+                map: 'world_mill_en',
+                series: {
+                    regions: [{
+                        values: stats,
+                        scale: ['#C8EEFF', '#0071A4'],
+                        normalizeFunction: 'polynomial'
+                    }]
+                },
+                onLabelShow: function (e, el, code) {
+                    el.html(el.html() + ' (GDP - ' + stats[code] + ')');
+                }
+            });
+        });
+    </script>
+}

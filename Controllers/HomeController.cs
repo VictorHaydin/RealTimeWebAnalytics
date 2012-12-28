@@ -14,7 +14,13 @@ namespace RealTimeWebAnalytics.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            ViewBag.Visits = await StorageService.Instance.GetAllVisits();
+            var visits = await StorageService.Instance.GetAllVisits();
+            var total = visits.Count();
+            var stats = visits.GroupBy(v => v.CountryCode, (code, v) => new { Code = code, Count = v.Count() });
+            var maxVisits = stats.Max(v => v.Count);
+
+            ViewBag.Stats = stats.Select(s => new {s.Code, Weight = (double) s.Count/maxVisits}.ToExpando()).ToList();
+            ViewBag.Visits = visits;
 
             return View();
         }
